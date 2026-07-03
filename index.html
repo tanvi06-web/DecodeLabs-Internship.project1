@@ -1,98 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TaskFlow</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tanvi Kinger | Computer Engineering Student</title>
+  <meta name="description" content="Portfolio of Tanvi Kinger, a Computer Engineering student focused on Java, DSA and web development." />
+
+  <!-- Google Fonts: Inter (headings) + Open Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ============ HEADER / NAVBAR ============ -->
-  <header class="navbar">
-    <div class="navbar-inner">
-      <span class="logo">TaskFlow</span>
+  <!-- ================= HEADER / NAV ================= -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="#hero" class="logo">Tanvi<span>.K</span></a>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+      <!-- Hamburger button for mobile -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
       </button>
 
-      <nav class="nav-links" id="navLinks">
-        <a href="#tasks">My Tasks</a>
-        <a href="#done">Done</a>
-        <a href="#hours">Hours</a>
+      <nav class="nav-menu" id="navMenu">
+        <ul>
+          <li><a href="#hero" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#skills" class="nav-link">Skills</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
       </nav>
     </div>
   </header>
 
-  <!-- ============ HERO SECTION ============ -->
-  <section class="hero">
-    <h1>TASKFLOW</h1>
-    <p>Organize your day efficiently</p>
-  </section>
+  <main>
 
-  <!-- ============ ADD TASK FORM ============ -->
-  <section class="add-task-section">
-    <form id="taskForm" class="task-form">
-      <input
-        type="text"
-        id="taskInput"
-        placeholder="What do you need to do?"
-        aria-label="New task"
-        required
-      >
-      <input
-        type="number"
-        id="hoursInput"
-        placeholder="Hours"
-        aria-label="Estimated hours"
-        min="0"
-        step="0.5"
-      >
-      <button type="submit" class="btn-add">Add Task</button>
-    </form>
-  </section>
+    <!-- ================= HERO SECTION ================= -->
+    <section id="hero" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text reveal">
+          <p class="eyebrow">Hello, I'm</p>
+          <h1>Tanvi Kinger</h1>
+          <p class="hero-role">Computer Engineering Student</p>
+          <span class="status-badge">🎓 3rd Year &middot; Focused on Java &amp; DSA</span>
+          <p class="hero-desc">
+            I'm an enthusiastic learner building a strong foundation in
+            problem-solving through Java and Data Structures &amp; Algorithms,
+            while also exploring web development to understand how ideas
+            become real, usable products.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+          </div>
+        </div>
 
-  <!-- ============ MAIN: TASK BOARD ============ -->
-  <main class="board">
-
-    <!-- COLUMN 1: MY TASKS -->
-    <section class="column" id="tasks">
-      <h2 class="column-title">My Tasks</h2>
-      <ul class="task-list" id="myTasksList">
-        <!-- Tasks added by JS will appear here -->
-      </ul>
+        <div class="hero-visual reveal">
+          <div class="avatar-circle">TK</div>
+        </div>
+      </div>
     </section>
 
-    <!-- COLUMN 2: DONE -->
-    <section class="column" id="done">
-      <h2 class="column-title">Done</h2>
-      <ul class="task-list" id="doneList">
-        <!-- Completed tasks will appear here -->
-      </ul>
+    <!-- ================= ABOUT SECTION ================= -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2 class="section-title reveal">About Me</h2>
+        <div class="about-grid">
+          <p class="about-text reveal">
+            I'm a third-year Computer Engineering student with a strong
+            interest in problem-solving and core software fundamentals. My
+            primary focus right now is Java and Data Structures &amp;
+            Algorithms, where I enjoy breaking problems down and writing
+            efficient, well-reasoned solutions. Alongside this, I'm building
+            practical web development skills, understanding how ideas turn
+            into interfaces people can actually use. I learn best by
+            building, and I'm always looking for opportunities to apply what
+            I know to real, meaningful projects.
+          </p>
+          <ul class="about-facts reveal">
+            <li><strong>Education:</strong> B.E. Computer Engineering, 3rd Year</li>
+            <li><strong>Core Focus:</strong> Java &amp; Data Structures and Algorithms</li>
+            <li><strong>Also Exploring:</strong> Web Development (HTML, CSS, JS)</li>
+            <li><strong>Open to:</strong> Internships &amp; Collaborative Projects</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- COLUMN 3: HOURS -->
-    <section class="column" id="hours">
-      <h2 class="column-title">Hours</h2>
-      <ul class="task-list" id="hoursList">
-        <!-- Hours per task will appear here -->
-      </ul>
+    <!-- ================= SKILLS SECTION ================= -->
+    <section id="skills" class="section skills">
+      <div class="container">
+        <h2 class="section-title reveal">Skills</h2>
+        <div class="tag-grid reveal">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Data Structures</span>
+          <span class="skill-tag">Algorithms</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">HTML &amp; CSS</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Git &amp; GitHub</span>
+          <span class="skill-tag">Problem Solving</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS SECTION ================= -->
+    <section id="projects" class="section projects">
+      <div class="container">
+        <h2 class="section-title reveal">Projects</h2>
+        <div class="projects-grid">
+
+          <article class="project-card reveal">
+            <div class="project-thumb">01</div>
+            <div class="project-body">
+              <h3>Personal Portfolio Website</h3>
+              <p>A fully responsive portfolio built with pure HTML, CSS &amp; JS, following a mobile-first design system.</p>
+              <div class="project-tags">
+                <span>HTML</span><span>CSS</span><span>JS</span>
+              </div>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+                View on GitHub &rarr;
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-thumb">02</div>
+            <div class="project-body">
+              <h3>Weather Forecast App</h3>
+              <p>A simple weather app that fetches live data from a public API and displays it with a clean UI.</p>
+              <div class="project-tags">
+                <span>JavaScript</span><span>API</span><span>CSS Grid</span>
+              </div>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+                View on GitHub &rarr;
+              </a>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-thumb">03</div>
+            <div class="project-body">
+              <h3>To-Do List Manager</h3>
+              <p>A task manager with add, edit, delete and local storage support to persist tasks between sessions.</p>
+              <div class="project-tags">
+                <span>JavaScript</span><span>LocalStorage</span>
+              </div>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="project-link">
+                View on GitHub &rarr;
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION ================= -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title reveal">Get In Touch</h2>
+        <p class="contact-sub reveal">Feel free to reach out for internships, collaborations, or opportunities.</p>
+
+        <form class="contact-form reveal" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
     </section>
 
   </main>
 
-  <!-- ============ FOOTER ============ -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <p>Student ID: <strong>DL-2026-0142</strong></p>
-      <p>Year: <strong>2026</strong></p>
-      <p>Contact: <a href="mailto:student.dummy@example.com">student.dummy@example.com</a></p>
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-wrapper">
+      <p>&copy; <span id="year"></span> Tanvi Kinger. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/tanvi-kinger-09b524370" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:Kingertanvi@gmail.com">Email</a>
+      </div>
     </div>
-    <p class="footer-bottom">&copy; 2026 TaskFlow.</p>
   </footer>
+
+  <!-- Back to top button -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">&uarr;</button>
 
   <script src="script.js"></script>
 </body>
