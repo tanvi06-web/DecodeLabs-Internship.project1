@@ -1,435 +1,565 @@
-/* ====================================================
-   TASKFLOW — STYLESHEET
-   Mobile-first. Breakpoints at 768px and 1024px.
-   ==================================================== */
+/* =========================================================
+   1. ROOT VARIABLES (Design System)
+   ========================================================= */
+:root {
+  /* Colors — grounded, professional palette */
+  --color-primary: #2F4156;   /* Deep Slate Navy */
+  --color-accent: #B98A5E;    /* Warm Clay */
+  --color-dark: #24272B;      /* Charcoal Ink */
+  --color-light: #DCE8F0;     /* Pastel Sky Blue Background */
+  --color-white: #FFFFFF;
+  --color-muted: #6B7280;     /* Muted grey text */
+  --color-border: #C3D7E3;    /* Soft blue-tinted border */
 
-/* ---------- 1. RESET ---------- */
+  /* Typography */
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* Layout */
+  --max-width: 1100px;
+  --radius: 10px;
+  --transition: 0.3s ease;
+}
+
+/* =========================================================
+   2. RESET
+   ========================================================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ---------- 2. COLOR VARIABLES (exact spec) ---------- */
-:root {
-  --primary: #A5856F;   /* Mocha Mousse */
-  --secondary: #A0D4E0; /* Ethereal Blue */
-  --background: #F2F0EA;/* Moonlit Grey */
-  --text: #2E2E2E;
-  --card: #FFFFFF;
-
-  --radius: 12px;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
-  --transition: 0.2s ease;
+html {
+  scroll-behavior: smooth; /* smooth scrolling for nav links */
 }
 
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: var(--background);
-  color: var(--text);
+  font-family: var(--font-body);
+  background-color: var(--color-light);
+  color: var(--color-dark);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
-ul {
-  list-style: none;
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--color-dark);
+  letter-spacing: -0.01em;
 }
 
-a {
-  text-decoration: none;
-  color: var(--text);
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-}
-
-/* ====================================================
-   3. NAVBAR (Flexbox)
-   ==================================================== */
-.navbar {
-  background-color: var(--card);
-  box-shadow: var(--shadow);
+/* =========================================================
+   3. HEADER / NAV
+   ========================================================= */
+.site-header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-.navbar-inner {
+.nav-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 5%;
+  height: 70px;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-dark);
 }
+.logo span { color: var(--color-primary); }
 
-/* Hamburger button (mobile only) */
-.menu-toggle {
+/* Hamburger - visible on mobile */
+.nav-toggle {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 26px;
-  height: 20px;
-  background: none;
+  gap: 5px;
+  z-index: 1100;
 }
-
-.menu-toggle span {
-  display: block;
+.nav-toggle .bar {
+  width: 26px;
   height: 3px;
-  width: 100%;
-  background-color: var(--text);
+  background-color: var(--color-dark);
   border-radius: 2px;
   transition: transform var(--transition), opacity var(--transition);
 }
+.nav-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.nav-toggle.active .bar:nth-child(2) { opacity: 0; }
+.nav-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-/* Nav links — hidden by default on mobile, shown via toggle */
-.nav-links {
-  display: none;
+/* Mobile menu: hidden off-canvas by default (mobile-first) */
+.nav-menu {
+  position: fixed;
+  top: 70px;
+  right: -100%;
+  width: 70%;
+  max-width: 300px;
+  height: calc(100vh - 70px);
+  background-color: var(--color-white);
+  box-shadow: -4px 0 15px rgba(0,0,0,0.08);
+  transition: right var(--transition);
+}
+.nav-menu.active { right: 0; }
+
+.nav-menu ul {
+  display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  text-align: center;
-  padding: 1rem 0 0;
+  padding: var(--space-md) var(--space-sm);
+  gap: var(--space-sm);
 }
 
-.nav-links.active {
-  display: flex;
+.nav-link {
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: width var(--transition);
+}
+.nav-link:hover::after,
+.nav-link:focus-visible::after { width: 100%; }
+
+/* =========================================================
+   4. BUTTONS
+   ========================================================= */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  transition: transform var(--transition), box-shadow var(--transition), background-color var(--transition);
+}
+.btn:active { transform: scale(0.96); } /* click effect */
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+.btn-primary:hover {
+  background-color: #1F2E3D;
+  box-shadow: 0 6px 16px rgba(47,65,86,0.3);
+  transform: translateY(-2px);
 }
 
-.nav-links a {
-  font-weight: 600;
-  padding: 0.5rem 0;
-  transition: color var(--transition);
+.btn-outline {
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+.btn-outline:hover {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  transform: translateY(-2px);
 }
 
-.nav-links a:hover {
-  color: var(--primary);
-}
-
-/* ====================================================
-   4. HERO SECTION
-   ==================================================== */
+/* =========================================================
+   5. HERO SECTION
+   ========================================================= */
 .hero {
+  padding: var(--space-xl) 0 var(--space-lg);
+  background-color: var(--color-light);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  align-items: center;
   text-align: center;
-  padding: 3.5rem 5% 2.5rem;
 }
 
-.hero h1 {
-  font-size: clamp(2.2rem, 8vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  color: var(--primary);
+.eyebrow {
+  color: var(--color-accent);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: var(--space-xs);
 }
 
-.hero p {
-  margin-top: 0.6rem;
-  font-size: 1.1rem;
-  color: var(--text);
-  opacity: 0.75;
+.hero-text h1 {
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
+  margin-bottom: var(--space-xs);
 }
 
-/* ====================================================
-   5. ADD TASK FORM (Flexbox)
-   ==================================================== */
-.add-task-section {
-  padding: 0 5% 2.5rem;
+.hero-role {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.status-badge {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: rgba(47,65,86,0.08);
+  border: 1px solid rgba(47,65,86,0.15);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.hero-desc {
+  max-width: 480px;
+  margin: 0 auto var(--space-md);
+  color: var(--color-muted);
+}
+
+.hero-buttons {
   display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-visual { display: flex; justify-content: center; }
+
+.avatar-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-white);
+  box-shadow: 0 15px 35px rgba(47,65,86,0.25);
+}
+
+/* =========================================================
+   6. GENERIC SECTION STYLES
+   ========================================================= */
+.section {
+  padding: var(--space-lg) 0;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  position: relative;
+}
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-primary);
+  margin: var(--space-xs) auto 0;
+  border-radius: 2px;
+}
+
+/* =========================================================
+   7. ABOUT SECTION
+   ========================================================= */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.about-text { color: var(--color-muted); }
+
+.about-facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  background-color: var(--color-white);
+  padding: var(--space-md);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--color-accent);
+}
+
+/* =========================================================
+   8. SKILLS SECTION
+   ========================================================= */
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+
+.skill-tag {
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.6rem 1.15rem;
+  border-radius: 8px;
+  transition: border-color var(--transition), transform var(--transition), background-color var(--transition);
+}
+.skill-tag:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   9. PROJECTS SECTION
+   ========================================================= */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.project-card {
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.project-thumb {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  height: 100px;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.task-form {
+.project-body { padding: var(--space-sm) var(--space-md) var(--space-md); }
+.project-body h3 { margin-bottom: var(--space-xs); font-size: 1.15rem; }
+.project-body p { color: var(--color-muted); font-size: 0.95rem; margin-bottom: var(--space-sm); }
+
+.project-tags {
   display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  width: 100%;
-  max-width: 600px;
-  background-color: var(--card);
-  padding: 1.2rem;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-.task-form input {
-  padding: 0.7rem 0.9rem;
-  border: 1.5px solid var(--background);
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: var(--background);
-  color: var(--text);
-  transition: border-color var(--transition);
-}
-
-.task-form input:focus {
-  outline: none;
-  border-color: var(--secondary);
-}
-
-.btn-add {
-  background-color: var(--primary);
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.75rem;
-  border-radius: 8px;
-  transition: background-color var(--transition), transform var(--transition);
-}
-
-.btn-add:hover {
-  background-color: #8d6e58;
-  transform: translateY(-2px);
-}
-
-/* ====================================================
-   6. BOARD — TASK COLUMNS (CSS Grid for layout)
-   ==================================================== */
-.board {
-  display: grid;
-  grid-template-columns: 1fr;   /* mobile: single column */
-  gap: 1.5rem;
-  padding: 0 5% 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.column {
-  background-color: var(--background);
-  border-radius: var(--radius);
-  padding: 1.2rem;
-}
-
-.column-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: var(--primary);
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 0.5rem;
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  min-height: 40px;
-}
-
-/* ---------- Task Card ---------- */
-.task-card {
-  background-color: var(--card);
-  border-radius: var(--radius);
-  padding: 0.9rem 1rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-  transition: box-shadow var(--transition), transform var(--transition);
-  animation: cardIn 0.25s ease;
-}
-
-.task-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-}
-
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.task-card .task-text {
-  flex: 1;
-  word-break: break-word;
-  font-size: 0.95rem;
-}
-
-.task-card.done-card .task-text {
-  text-decoration: line-through;
-  color: #999;
-}
-
-/* Card action buttons (Flexbox) */
-.task-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  position: relative;
-}
-
-.btn-done {
-  background-color: var(--secondary);
-  color: var(--text);
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  transition: background-color var(--transition);
-  white-space: nowrap;
-}
-
-.btn-done:hover {
-  background-color: #8cc4d2;
-}
-
-/* 3-dot menu */
-.menu-btn {
-  background: none;
-  font-size: 1.2rem;
-  color: var(--text);
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
-  transition: background-color var(--transition);
-}
-
-.menu-btn:hover {
-  background-color: var(--background);
-}
-
-.dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: var(--card);
-  box-shadow: var(--shadow-hover);
-  border-radius: 8px;
-  overflow: hidden;
-  min-width: 110px;
-  z-index: 10;
-}
-
-.dropdown.show {
-  display: block;
-}
-
-.dropdown button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.6rem 0.9rem;
-  background: none;
-  font-size: 0.85rem;
-  color: var(--text);
-  transition: background-color var(--transition);
-}
-
-.dropdown button:hover {
-  background-color: var(--background);
-}
-
-/* Hours list item */
-.hours-card {
-  background-color: var(--card);
-  border-radius: var(--radius);
-  padding: 0.9rem 1rem;
-  box-shadow: var(--shadow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.95rem;
-}
-
-.hours-card .hours-value {
-  font-weight: 700;
-  color: var(--primary);
-}
-
-/* Empty state text */
-.empty-msg {
-  font-size: 0.85rem;
-  color: #999;
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-/* ====================================================
-   7. FOOTER
-   ==================================================== */
-.footer {
-  background-color: var(--primary);
-  color: #fff;
-  padding: 2rem 5%;
-  text-align: center;
-}
-
-.footer-inner {
-  display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-sm);
+}
+.project-tags span {
+  background-color: var(--color-light);
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
 }
 
-.footer-inner a {
-  color: #fff;
+.project-link {
   font-weight: 600;
-  text-decoration: underline;
+  color: var(--color-accent);
+  transition: color var(--transition);
+}
+.project-link:hover { color: var(--color-primary); }
+
+/* =========================================================
+   10. CONTACT SECTION
+   ========================================================= */
+.contact-sub {
+  text-align: center;
+  color: var(--color-muted);
+  max-width: 500px;
+  margin: calc(-1 * var(--space-md)) auto var(--space-lg);
 }
 
-.footer-bottom {
-  font-size: 0.85rem;
-  opacity: 0.85;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  padding-top: 0.8rem;
+.contact-form {
+  max-width: 550px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background-color: var(--color-white);
+  padding: var(--space-md);
+  border-radius: var(--radius);
 }
 
-/* ====================================================
-   8. TABLET BREAKPOINT — 768px
-   ==================================================== */
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label { font-weight: 500; font-size: 0.9rem; }
+
+.form-group input,
+.form-group textarea {
+  font-family: var(--font-body);
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-light);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(185,138,94,0.2);
+}
+
+.form-status {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  min-height: 1.2em;
+}
+
+/* =========================================================
+   11. FOOTER
+   ========================================================= */
+.site-footer {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+  padding: var(--space-md) 0;
+}
+
+.footer-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-items: center;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  gap: var(--space-md);
+}
+.social-links a { transition: color var(--transition); }
+.social-links a:hover { color: var(--color-accent); }
+
+/* =========================================================
+   12. BACK TO TOP BUTTON
+   ========================================================= */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity var(--transition), transform var(--transition), background-color var(--transition);
+  z-index: 900;
+}
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.back-to-top:hover { background-color: var(--color-accent); }
+
+/* =========================================================
+   13. SCROLL REVEAL ANIMATION
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   14. RESPONSIVE BREAKPOINTS (mobile-first: min-width up)
+   ========================================================= */
+
+/* Tablet: 600px and up */
+@media (min-width: 600px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Desktop: 768px and up -> nav becomes horizontal */
 @media (min-width: 768px) {
+  .nav-toggle { display: none; }
 
-  .menu-toggle {
-    display: none;
-  }
-
-  .nav-links {
-    display: flex;
-    flex-direction: row;
+  .nav-menu {
+    position: static;
     width: auto;
-    gap: 2rem;
+    height: auto;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .nav-menu ul {
+    flex-direction: row;
     padding: 0;
+    gap: var(--space-md);
   }
 
-  .task-form {
-    flex-direction: row;
+  .hero-grid {
+    grid-template-columns: 1.1fr 0.9fr;
+    text-align: left;
+  }
+  .hero-text .hero-desc { margin: 0 0 var(--space-md); }
+  .hero-buttons { justify-content: flex-start; }
+
+  .about-grid {
+    grid-template-columns: 1.4fr 1fr;
     align-items: center;
   }
 
-  .task-form input[type="text"] {
-    flex: 2;
-  }
-
-  .task-form input[type="number"] {
-    flex: 1;
-  }
-
-  .board {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-inner {
+  .footer-wrapper {
     flex-direction: row;
-    justify-content: center;
-    gap: 2rem;
+    justify-content: space-between;
+    text-align: left;
   }
 }
 
-/* ====================================================
-   9. DESKTOP BREAKPOINT — 1024px
-   ==================================================== */
+/* Large desktop: 1024px and up */
 @media (min-width: 1024px) {
+  .projects-grid { grid-template-columns: repeat(3, 1fr); }
+  .avatar-circle { width: 260px; height: 260px; font-size: 3.6rem; }
+}
 
-  .board {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .hero {
-    padding: 4.5rem 5% 3rem;
-  }
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
 }
